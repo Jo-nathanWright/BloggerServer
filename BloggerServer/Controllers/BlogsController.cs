@@ -33,6 +33,20 @@ public class BlogsController : ControllerBase
         }
         } 
 
+        [HttpGet("{id}")]
+        public  ActionResult<Blog> Get(int id)
+        {
+            try
+            {
+        Blog blog = _bs.Get(id);
+        return Ok(blog);
+      }
+            catch (Exception err)
+            {
+            return BadRequest(err.Message);
+        }
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<Blog>> Create([FromBody] Blog newBlog)
@@ -43,6 +57,25 @@ public class BlogsController : ControllerBase
         newBlog.CreatorId = userInfo.Id;
         Blog created = _bs.Create(newBlog);
         return Ok(created);
+      }
+            catch (Exception err)
+            {
+            return BadRequest(err.Message);
+        }
+        }
+
+        [HttpPut("{id}")]
+        [Authorize]
+
+        public async Task<ActionResult<Blog>> Update(int id, [FromBody] Blog editedBlog)
+        {
+            try
+            {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        editedBlog.CreatorId = userInfo.Id;
+        editedBlog.Id = id;
+        Blog blog = _bs.Update(editedBlog);
+        return Ok(blog);
       }
             catch (Exception err)
             {

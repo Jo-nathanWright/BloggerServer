@@ -6,7 +6,7 @@ using Dapper;
 
 namespace BloggerServer.Repositories
 {
-    public class BlogsRepository
+  public class BlogsRepository
     {
     private readonly IDbConnection _db;
     public BlogsRepository(IDbConnection db)
@@ -56,5 +56,20 @@ namespace BloggerServer.Repositories
       newBlog.Id = _db.ExecuteScalar<int>(sql, newBlog);
       return newBlog;
     }
+
+    internal Blog Update(Blog original)
+    {
+      string sql = @"
+     UPDATE blogs
+     SET
+        title = @Title,
+        body = @Body,
+        imgUrl = @ImgUrl,
+        published = @Published
+     WHERE id = @Id;
+     ";
+      _db.Execute(sql, original);
+      return GetById(original.Id);
     }
+  }
 }
