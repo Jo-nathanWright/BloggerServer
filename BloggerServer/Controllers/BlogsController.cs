@@ -66,21 +66,20 @@ public class BlogsController : ControllerBase
 
         [HttpPut("{id}")]
         [Authorize]
-
         public async Task<ActionResult<Blog>> Update(int id, [FromBody] Blog editedBlog)
         {
             try
             {
-        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-        editedBlog.CreatorId = userInfo.Id;
-        editedBlog.Id = id;
-        Blog blog = _bs.Update(editedBlog);
-        return Ok(blog);
-      }
+                Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+                editedBlog.CreatorId = userInfo.Id;
+                editedBlog.Id = id;
+                Blog blog = _bs.Update(editedBlog);
+                return Ok(blog);
+            }
             catch (Exception err)
             {
-            return BadRequest(err.Message);
-        }
+                return BadRequest(err.Message);
+            }
         }
   }
 }

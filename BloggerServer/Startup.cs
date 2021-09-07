@@ -37,6 +37,7 @@ namespace BloggerServer
             services.AddScoped<AccountService>();
 
             services.AddTransient<BlogsService>();
+            services.AddTransient<BlogsRepository>();
     }
 
         private void ConfigureCors(IServiceCollection services)

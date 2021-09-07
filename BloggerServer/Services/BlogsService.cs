@@ -14,12 +14,6 @@ namespace BloggerServer.Services
     {
       _repo = repo;
     }
-
-    internal Blog Create(Blog newBlog)
-    {
-      return _repo.Create(newBlog);
-    }
-
     internal List<Blog> Get()
     {
       List<Blog> blogs = _repo.GetAll();
@@ -34,6 +28,11 @@ namespace BloggerServer.Services
         throw new Exception("Invalid Id");
       }
       return blog;
+    }
+
+    internal Blog Create(Blog newBlog)
+    {
+      return _repo.Create(newBlog);
     }
 
     internal Blog Update(Blog editedBlog)
